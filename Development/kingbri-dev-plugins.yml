@@ -1,12 +1,11 @@
 name: kingbri's YAML dev plugins
 author: kingbri
-# TODO: Update all minVersions to 0.7 when 0.7 is bumped in app
 sources:
   - name: AnimeTosho
     version: 6
     minVersion: '0.6.4'
     about: >-
-      A mirror for Nyaa. Mainly used to circumvent Nyaa ISP blocks.
+      An aggregator of public trackers for Japanese media.
     website: https://animetosho.org
     tags:
       - name: Anime
@@ -52,7 +51,7 @@ sources:
     version: 6
     minVersion: "0.6.4"
     about: >-
-      The one stop shop for your anime needs.
+      The one stop shop for your anime and Japanese media needs.
     website: "https://nyaa.si"
     tags:
       - name: Anime
@@ -90,7 +89,7 @@ sources:
   - name: 1337x
     version: 3
     about: >-
-      Large aggregate site for media.
+      Large aggregate site for media. Make your queries descriptive because searches are slow.
     website: https://1337x.to
     tags:
       - name: Slow
@@ -310,29 +309,32 @@ sources:
         query: td:nth-child(1)
         regex: '{query}'
   - name: EZTV
-    version: 1
+    version: 2
     minVersion: '0.7'
     about: >-
-      Large source of western TV shows.
+      Large source of western TV shows. Make your queries descriptive because searches are slow.
     website: "https://eztv.re"
     tags:
+      - name: Slow
+        color: ff9500
       - name: TV
     fallbackUrls:
       - "https://eztv.ag"
       - "https://eztv.it"
       - "https://eztv.ch"
     htmlParser:
-      searchUrl: /search/{query}
-      rows: table:nth-child(16) tbody .forum_header_border
+      searchUrl: /search/{query}?layout=def_wlinks
+      rows: table.forum_header_border tbody tr.forum_header_border
       magnet:
-        query: td:nth-child(3) a
+        externalLinkQuery: .epinfo
+        query: div:nth-child(1) > a:nth-child(2)
         attribute: href
       title:
         query: td:nth-child(2) a
       size:
-        query: td:nth-child(4)
+        query: td:nth-last-child(3)
       sl:
-        seeders: td:nth-child(6)
+        seeders: td:nth-last-child(1)
   - name: RuTor
     version: 1
     minVersion: '0.7'
@@ -362,6 +364,115 @@ sources:
         seederRegex: ([^\x{A0}])
         leechers: td:nth-last-child(1) span.red
         leecherRegex: ([^\x{A0}])
+  - name: BitLord
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      Large aggregate site of media.
+    website: https://bitlordsearch.com
+    tags:
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /search?q={query}
+      rows: .bls-row
+      magnet:
+        query: .magnet-button
+        attribute: href
+      title:
+        query: .title
+      size:
+        query: .size
+      sl:
+        seeders: .seeds
+        leechers: .peers
+  - name: ExtraTorrent
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      Large aggreate site of media.
+    website: https://extratorrent.st
+    fallbackUrls:
+      - https://extratorrent2.unblockninja.com
+      - https://extratorrent.unblocked.nz
+      - https://extra.torrentbay.to
+    tags:
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /search/?search={query}
+      rows: .tlr
+      magnet:
+        query: td:nth-child(1) > a:nth-child(2)
+        attribute: href
+      title:
+        query: .tli > a
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: .sn
+        leechers: .ln
+  - name: Tokyo Toshokan
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      A BitTorrent library for Japanese media
+    website: https://www.tokyotosho.info/
+    tags:
+      - name: Anime
+    fallbackUrls:
+     - https://tokyo-tosho.net
+     - https://www.tokyotosho.se/
+    htmlParser:
+      searchUrl: /search.php?terms={query}
+      rows: .category_0:has(a)
+      magnet:
+        query: .desc-top > a:nth-child(1)
+        attribute: href
+      title:
+        query: .desc-top > a:nth-child(2)
+  - name: Sukebei
+    version: 1
+    minVersion: "0.7"
+    about: >-
+      The adult version of Nyaa. Not for the faint of heart.
+    website: "https://sukebei.nyaa.si"
+    tags:
+      - name: Adult
+        color: ff2d55
+    trackers:
+      - http://nyaa.tracker.wf:7777/announce
+      - udp://open.stealth.si:80/announce
+      - udp://tracker.opentrackr.org:1337/announce
+      - udp://exodus.desync.com:6969/announce
+      - udp://tracker.torrent.eu.org:451/announce
+    rssParser:
+      searchUrl: /?page=rss&q={query}
+      items: item
+      magnetHash:
+        query: nyaa:infoHash
+      title:
+        query: title
+      size:
+        query: nyaa:size
+      sl:
+        seeders: nyaa:seeders
+        leechers: nyaa:leechers
+    htmlParser:
+      searchUrl: ?q={query}
+      rows: .torrent-list tbody tr
+      magnet:
+        query: td:nth-child(3) > a:nth-child(2)
+        attribute: href
+      title:
+        query: td:nth-child(2) > a:nth-last-child(1)
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: td:nth-child(6)
+        leechers: td:nth-child(7)
 actions:
   - name: Open in Outplayer
     version: 3
