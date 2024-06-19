@@ -473,6 +473,33 @@ sources:
       sl:
         seeders: td:nth-child(6)
         leechers: td:nth-child(7)
+  - name: MagnetDL
+    version: 1
+    minVersion: '0.7.1'
+    about: >-
+      Large source of various forms of media.
+    website: "https://magnetdl.com"
+    tags:
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /{queryFirstLetter}/{query}
+      request:
+        headers:
+          accept: "*/*;q=1.0"
+          header2: "value2"
+      rows: .fill-table table tbody tr
+      magnet:
+        query: .m a
+        attribute: href
+      title:
+        query: .n
+      size:
+        query: td:nth-child(6)
+      sl:
+        seeders: .s
+        leechers: .l
 actions:
   - name: Open in Outplayer
     version: 3
