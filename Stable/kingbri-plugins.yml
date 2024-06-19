@@ -3,9 +3,9 @@ author: kingbri
 sources:
   - name: AnimeTosho
     version: 6
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: >-
-      A mirror for Nyaa. Mainly used to circumvent Nyaa ISP blocks.
+      An aggregator of public trackers for Japanese media.
     website: https://animetosho.org
     tags:
       - name: Anime
@@ -49,9 +49,9 @@ sources:
         leecherRegex: Leechers:\s?(\d+)
   - name: Nyaa
     version: 6
-    minVersion: '0.7'
+    minVersion: "0.6.4"
     about: >-
-      The one stop shop for your anime needs.
+      The one stop shop for your anime and Japanese media needs.
     website: "https://nyaa.si"
     tags:
       - name: Anime
@@ -88,9 +88,8 @@ sources:
         leechers: td:nth-child(7)
   - name: 1337x
     version: 3
-    minVersion: '0.7'
     about: >-
-      Large aggregate site for media.
+      Large aggregate site for media. Make your queries descriptive because searches are slow.
     website: https://1337x.to
     tags:
       - name: Slow
@@ -113,9 +112,58 @@ sources:
       sl:
         seeders: .seeds
         leechers: .leeches
+  - name: RARBG
+    version: 4
+    minVersion: '0.6.4'
+    about: >-
+      Massive aggregate site for media.
+      Can be unreliable at times, so a different source is probably better.
+    website: https://rarbg.to
+    tags:
+      - name: Unreliable
+        color: ff3b30
+      - name: Movies
+      - name: TV
+      - name: Anime
+    api:
+      apiUrl: https://torrentapi.org/pubapi_v2.php
+      clientSecret:
+        url: ?get_token=get_token&app_id=ferrite
+        expiryLength: 660
+        responseType: json
+        query: token
+    jsonParser:
+      searchUrl: >-
+        ?mode=search&search_string={query}&format=json_extended&app_id=ferrite&token={secret}
+      results: torrent_results
+      magnetLink:
+        query: download
+      title:
+        query: title
+      size:
+        query: size
+      sl:
+        seeders: seeders
+        leechers: leechers
+    htmlParser:
+      searchUrl: /torrents.php?search={query}
+      rows: .lista2t tbody .lista2
+      magnet:
+        externalLinkQuery: td:nth-child(2) > a
+        query: >-
+          div.content-rounded table.lista-rounded tbody tr:nth-child(1) td.lista
+          a:nth-child(3)
+        attribute: href
+      title:
+        query: td:nth-child(2) > a
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: td:nth-child(5)
+        leechers: td:nth-child(6)
   - name: YTS
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: >-
       Has pretty much every movie out there.
     website: https://yts.mx
@@ -145,7 +193,7 @@ sources:
         leechers: peers
   - name: PirateBay
     version: 4
-    minVersion: "0.7"
+    minVersion: "0.6.4"
     about: >-
       The legendary media aggregate site. Nowadays, it's pretty unreliable.
     website: https://thepiratebay.org
@@ -198,7 +246,7 @@ sources:
         leechers: td:nth-child(4)
   - name: BitSearch
     version: 3
-    minVersion: '0.7'
+    minVersion: "0.6.4"
     about: >-
       Scraper and indexer for large sites such as RARBG. Extremely reliable to use.
     website: https://bitsearch.to
@@ -221,7 +269,7 @@ sources:
         leechers: .info > div > div > div > div:nth-child(4) > font
   - name: Torrentz2
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: >-
       Scraper and indexer of various sites. Extremely reliable to use.
     website: https://torrentz2.nz
@@ -244,7 +292,7 @@ sources:
         leechers: dd > span:nth-child(5)
   - name: Sneedex
     version: 1
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: >-
       A curated list for the best anime media files.
       Requires a non-ISP blocked connection to Nyaa.
@@ -261,29 +309,32 @@ sources:
         query: td:nth-child(1)
         regex: '{query}'
   - name: EZTV
-    version: 1
+    version: 2
     minVersion: '0.7'
     about: >-
-      Large source of western TV shows.
+      Large source of western TV shows. Make your queries descriptive because searches are slow.
     website: "https://eztv.re"
     tags:
+      - name: Slow
+        color: ff9500
       - name: TV
     fallbackUrls:
       - "https://eztv.ag"
       - "https://eztv.it"
       - "https://eztv.ch"
     htmlParser:
-      searchUrl: /search/{query}
-      rows: table:nth-child(16) tbody .forum_header_border
+      searchUrl: /search/{query}?layout=def_wlinks
+      rows: table.forum_header_border tbody tr.forum_header_border
       magnet:
-        query: td:nth-child(3) a
+        externalLinkQuery: .epinfo
+        query: div:nth-child(1) > a:nth-child(2)
         attribute: href
       title:
         query: td:nth-child(2) a
       size:
-        query: td:nth-child(4)
+        query: td:nth-last-child(3)
       sl:
-        seeders: td:nth-child(6)
+        seeders: td:nth-last-child(1)
   - name: RuTor
     version: 1
     minVersion: '0.7'
@@ -313,10 +364,119 @@ sources:
         seederRegex: ([^\x{A0}])
         leechers: td:nth-last-child(1) span.red
         leecherRegex: ([^\x{A0}])
+  - name: BitLord
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      Large aggregate site of media.
+    website: https://bitlordsearch.com
+    tags:
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /search?q={query}
+      rows: .bls-row
+      magnet:
+        query: .magnet-button
+        attribute: href
+      title:
+        query: .title
+      size:
+        query: .size
+      sl:
+        seeders: .seeds
+        leechers: .peers
+  - name: ExtraTorrent
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      Large aggreate site of media.
+    website: https://extratorrent.st
+    fallbackUrls:
+      - https://extratorrent2.unblockninja.com
+      - https://extratorrent.unblocked.nz
+      - https://extra.torrentbay.to
+    tags:
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /search/?search={query}
+      rows: .tlr
+      magnet:
+        query: td:nth-child(1) > a:nth-child(2)
+        attribute: href
+      title:
+        query: .tli > a
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: .sn
+        leechers: .ln
+  - name: Tokyo Toshokan
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      A BitTorrent library for Japanese media
+    website: https://www.tokyotosho.info/
+    tags:
+      - name: Anime
+    fallbackUrls:
+     - https://tokyo-tosho.net
+     - https://www.tokyotosho.se/
+    htmlParser:
+      searchUrl: /search.php?terms={query}
+      rows: .category_0:has(a)
+      magnet:
+        query: .desc-top > a:nth-child(1)
+        attribute: href
+      title:
+        query: .desc-top > a:nth-child(2)
+  - name: Sukebei
+    version: 1
+    minVersion: "0.7"
+    about: >-
+      The adult version of Nyaa. Not for the faint of heart.
+    website: "https://sukebei.nyaa.si"
+    tags:
+      - name: Adult
+        color: ff2d55
+    trackers:
+      - http://nyaa.tracker.wf:7777/announce
+      - udp://open.stealth.si:80/announce
+      - udp://tracker.opentrackr.org:1337/announce
+      - udp://exodus.desync.com:6969/announce
+      - udp://tracker.torrent.eu.org:451/announce
+    rssParser:
+      searchUrl: /?page=rss&q={query}
+      items: item
+      magnetHash:
+        query: nyaa:infoHash
+      title:
+        query: title
+      size:
+        query: nyaa:size
+      sl:
+        seeders: nyaa:seeders
+        leechers: nyaa:leechers
+    htmlParser:
+      searchUrl: ?q={query}
+      rows: .torrent-list tbody tr
+      magnet:
+        query: td:nth-child(3) > a:nth-child(2)
+        attribute: href
+      title:
+        query: td:nth-child(2) > a:nth-last-child(1)
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: td:nth-child(6)
+        leechers: td:nth-child(7)
 actions:
   - name: Open in Outplayer
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: |-
       Uses libmpv as a backend.
       Supports PIP with MKV files.
@@ -329,7 +489,7 @@ actions:
         scheme: outplayer://{link}
   - name: Open in VLC
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: |-
       An opensource video player that runs pretty much anywhere and can play pretty much anything.
     website: https://www.videolan.org/vlc/
@@ -341,7 +501,7 @@ actions:
       - scheme: vlc://${link}
   - name: Open in Infuse
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     about: >-
       Player full of support for various media servers, WebDAV, and multiple file formats.
       Not opensource.
@@ -353,7 +513,6 @@ actions:
         scheme: infuse://x-callback-url/play?url={link}
   - name: Open in WebTor
     version: 2
-    minVersion: '0.7'
     about: >-
       Plays magnet links on the web. Can be slow.
     website: https://webtor.io/#/
@@ -362,7 +521,7 @@ actions:
     deeplink: "https://webtor.io/#/show?magnet={link}"
   - name: Open in iTorrent
     version: 3
-    minVersion: '0.7'
+    minVersion: '0.6.4'
     website: https://github.com/XITRIX/iTorrent
     requires:
       - magnet
