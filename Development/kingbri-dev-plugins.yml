@@ -92,7 +92,7 @@ sources:
         leechers: td:nth-child(7)
   - name: Kickass
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://kick4ss.com
     tags:
       - name: Reliable
@@ -207,7 +207,7 @@ sources:
         leechers: peers
   - name: PirateBay
     version: 4
-    minVersion: "0.6.4"
+    minVersion: '0.6.4'
     about: >-
       The legendary media aggregate site. Nowadays, it's pretty unreliable.
     website: https://thepiratebay.org
@@ -428,7 +428,7 @@ sources:
         query: .desc-top > a:nth-child(2)
   - name: Sukebei
     version: 1
-    minVersion: "0.7"
+    minVersion: '0.7'
     about: >-
       The adult version of Nyaa. Not for the faint of heart.
     website: "https://sukebei.nyaa.si"
@@ -468,7 +468,7 @@ sources:
         leechers: td:nth-child(7)
   - name: TorrentDownload
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://www.torrentdownload.info
     tags:
       - name: Slow
@@ -493,7 +493,7 @@ sources:
         leecherRegex: (\d+)
   - name: AniRena
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://www.anirena.com
     tags:
       - name: Anime
@@ -512,7 +512,7 @@ sources:
         leechers: table tbody tr .torrents_small_leechers_data1
   - name: TorrentDownloads
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://www.torrentdownloads.pro
     tags:
       - name: Slow
@@ -536,7 +536,7 @@ sources:
         leechers: span:nth-child(3)
   - name: LimeTorrents
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://www.limetorrents.lol
     tags:
       - name: Slow
@@ -566,7 +566,7 @@ sources:
         leecherRegex: (\d+)
   - name: Torrent9
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://torrent9.to
     tags:
       - name: Slow
@@ -594,7 +594,7 @@ sources:
         leecherRegex: (\S+)
   - name: IlCorsaroNero
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: http://ilcorsaronero.link
     tags:
       - name: Italian
@@ -617,7 +617,7 @@ sources:
         leechers: td:nth-child(7)
   - name: OxTorrent
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://oxtorrent.gy
     tags:
       - name: Slow
@@ -642,7 +642,7 @@ sources:
         leecherRegex: (\S+)
   - name: TorLock
     version: 1
-    minVersion: 0.7.2
+    minVersion: '0.7.2'
     website: https://www.torlock.com
     tags:
       - name: Slow
