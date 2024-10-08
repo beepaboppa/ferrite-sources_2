@@ -8,6 +8,8 @@ sources:
       An aggregator of public trackers for Japanese media.
     website: https://animetosho.org
     tags:
+      - name: Reliable
+        color: 34c759
       - name: Anime
     rssParser:
       rssUrl: https://feed.animetosho.org
@@ -54,6 +56,8 @@ sources:
       The one stop shop for your anime and Japanese media needs.
     website: "https://nyaa.si"
     tags:
+      - name: Reliable
+        color: 34c759
       - name: Anime
     trackers:
       - http://nyaa.tracker.wf:7777/announce
@@ -86,6 +90,65 @@ sources:
       sl:
         seeders: td:nth-child(6)
         leechers: td:nth-child(7)
+  - name: Kickass
+    version: 1
+    minVersion: '0.7.2'
+    website: https://kick4ss.com
+    tags:
+      - name: Reliable
+        color: 34c759
+      - name: Movies
+      - name: TV
+      - name: Anime
+    fallbackUrls:
+      - https://kickass-kat.com
+      - https://kickass.vc
+      - https://kat.how
+      - https://kat.li
+      - https://kickass.cm
+      - https://kickass2.st
+      - https://kat.sx
+      - https://thekat.info
+    htmlParser:
+      searchUrl: /usearch/{query}/?field=seeders&sorder=desc
+      rows: .data tbody tr:not(.firstr)
+      magnet:
+        # May not work because magnet is URLEncoded
+        query: td:nth-child(1) div:nth-child(1) a:nth-last-child(2)
+        attribute: href
+        regex: (magnet.*)
+      title:
+        query: td:nth-child(1) .torrentname .torType a
+      size:
+        query: .nobr
+      sl:
+        seeders: .red
+        leechers: .green
+  - name: Torrentz2
+    version: 3
+    minVersion: '0.6.4'
+    about: >-
+      Scraper and indexer of various sites. Extremely reliable to use.
+    website: https://torrentz2.nz
+    tags:
+      - name: Reliable
+        color: 34c759
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /search?q={query}
+      rows: '#wrap dl'
+      magnet:
+        query: dd > span:nth-child(1) > a
+        attribute: href
+      title:
+        query: dt > a
+      size:
+        query: dd > span:nth-child(3)
+      sl:
+        seeders: dd > span:nth-child(4)
+        leechers: dd > span:nth-child(5)
   - name: 1337x
     version: 3
     about: >-
@@ -112,55 +175,6 @@ sources:
       sl:
         seeders: .seeds
         leechers: .leeches
-  - name: RARBG
-    version: 4
-    minVersion: '0.6.4'
-    about: >-
-      Massive aggregate site for media.
-      Can be unreliable at times, so a different source is probably better.
-    website: https://rarbg.to
-    tags:
-      - name: Unreliable
-        color: ff3b30
-      - name: Movies
-      - name: TV
-      - name: Anime
-    api:
-      apiUrl: https://torrentapi.org/pubapi_v2.php
-      clientSecret:
-        url: ?get_token=get_token&app_id=ferrite
-        expiryLength: 660
-        responseType: json
-        query: token
-    jsonParser:
-      searchUrl: >-
-        ?mode=search&search_string={query}&format=json_extended&app_id=ferrite&token={secret}
-      results: torrent_results
-      magnetLink:
-        query: download
-      title:
-        query: title
-      size:
-        query: size
-      sl:
-        seeders: seeders
-        leechers: leechers
-    htmlParser:
-      searchUrl: /torrents.php?search={query}
-      rows: .lista2t tbody .lista2
-      magnet:
-        externalLinkQuery: td:nth-child(2) > a
-        query: >-
-          div.content-rounded table.lista-rounded tbody tr:nth-child(1) td.lista
-          a:nth-child(3)
-        attribute: href
-      title:
-        query: td:nth-child(2) > a
-      size:
-        query: td:nth-child(4)
-      sl:
-        seeders: td:nth-child(5)
-        leechers: td:nth-child(6)
   - name: YTS
     version: 3
     minVersion: '0.6.4'
@@ -193,7 +207,7 @@ sources:
         leechers: peers
   - name: PirateBay
     version: 4
-    minVersion: "0.6.4"
+    minVersion: '0.6.4'
     about: >-
       The legendary media aggregate site. Nowadays, it's pretty unreliable.
     website: https://thepiratebay.org
@@ -245,12 +259,14 @@ sources:
         seeders: td:nth-child(3)
         leechers: td:nth-child(4)
   - name: BitSearch
-    version: 3
+    version: 4
     minVersion: "0.6.4"
     about: >-
-      Scraper and indexer for large sites such as RARBG. Extremely reliable to use.
+      Scraper and indexer for large sites such as RARBG. Currently dead, but still has old torrents listed.
     website: https://bitsearch.to
     tags:
+      - name: Dead
+        color: ff3b30
       - name: Movies
       - name: TV
       - name: Anime
@@ -267,29 +283,6 @@ sources:
       sl:
         seeders: .info > div > div > div > div:nth-child(3) > font
         leechers: .info > div > div > div > div:nth-child(4) > font
-  - name: Torrentz2
-    version: 3
-    minVersion: '0.6.4'
-    about: >-
-      Scraper and indexer of various sites. Extremely reliable to use.
-    website: https://torrentz2.nz
-    tags:
-      - name: Movies
-      - name: TV
-      - name: Anime
-    htmlParser:
-      searchUrl: /search?q={query}
-      rows: '#wrap dl'
-      magnet:
-        query: dd > span:nth-child(1) > a
-        attribute: href
-      title:
-        query: dt > a
-      size:
-        query: dd > span:nth-child(3)
-      sl:
-        seeders: dd > span:nth-child(4)
-        leechers: dd > span:nth-child(5)
   - name: Sneedex
     version: 1
     minVersion: '0.6.4'
@@ -435,7 +428,7 @@ sources:
         query: .desc-top > a:nth-child(2)
   - name: Sukebei
     version: 1
-    minVersion: "0.7"
+    minVersion: '0.7'
     about: >-
       The adult version of Nyaa. Not for the faint of heart.
     website: "https://sukebei.nyaa.si"
@@ -473,6 +466,204 @@ sources:
       sl:
         seeders: td:nth-child(6)
         leechers: td:nth-child(7)
+  - name: TorrentDownload
+    version: 1
+    minVersion: '0.7.2'
+    website: https://www.torrentdownload.info
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: Movies
+      - name: TV
+    htmlParser:
+      searchUrl: /search?q={query}
+      rows: table:nth-of-type(2) tbody tr:not(:first-child)
+      magnet:
+        externalLinkQuery: .tt-name a
+        query: .table2 tr:nth-child(5) a
+        attribute: href
+      title:
+        query: .tt-name a
+      size:
+        query: .tdnormal:nth-of-type(3)
+      sl:
+        seeders: .tdseed
+        seederRegex: (\d+)
+        leechers: .tdleech
+        leecherRegex: (\d+)
+  - name: AniRena
+    version: 1
+    minVersion: '0.7.2'
+    website: https://www.anirena.com
+    tags:
+      - name: Anime
+    htmlParser:
+      searchUrl: /?s={query}
+      rows: .full2:has(table)
+      magnet:
+        query: table tbody tr .torrents_small_info_data2 a:nth-child(2)
+        attribute: href
+      title:
+        query: table tbody tr .torrents_small_info_data1
+      size:
+        query: table tbody tr .torrents_small_size_data1
+      sl:
+        seeders: table tbody tr .torrents_small_seeders_data1
+        leechers: table tbody tr .torrents_small_leechers_data1
+  - name: TorrentDownloads
+    version: 1
+    minVersion: '0.7.2'
+    website: https://www.torrentdownloads.pro
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: Movies
+      - name: TV
+    htmlParser:
+      searchUrl: /search/?search={query}
+      rows: div:nth-child(6) .right_shadow .top_left_curve .top_right_curve .bottom_right_curve .bottom_left_curve .inner_container div:has(a.cloud)
+      magnet:
+        externalLinkQuery: p a
+        query: div:nth-child(3) .right_shadow .top_left_curve .top_right_curve .bottom_right_curve .bottom_left_curve .inner_container div:nth-child(14) p a
+        attribute: href
+      title:
+        query: p a
+        regex: ^\s*(.*?)\s*$
+      size:
+        query: span:nth-child(5)
+      sl:
+        seeders: span:nth-child(4)
+        leechers: span:nth-child(3)
+  - name: LimeTorrents
+    version: 1
+    minVersion: '0.7.2'
+    website: https://www.limetorrents.lol
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: Movies
+      - name: TV
+    fallbackUrls:
+      - https://www.limetorrents.asia
+      - https://www.limetorrents.co
+      - https://www.limetor.com
+      - https://www.limetorrents.info
+    htmlParser:
+      searchUrl: /search/all/{query}/seeds/1/
+      rows: .table2 tbody tr:nth-child(n+2)
+      magnet:
+        externalLinkQuery: .tt-name a:nth-child(2)
+        query: div:nth-child(13) div a
+        attribute: href
+      title:
+        query: .tt-name
+      size:
+        query: .tdnormal:nth-child(3)
+      sl:
+        seeders: .tdleech
+        seederRegex: (\d+)
+        leechers: .tdseed
+        leecherRegex: (\d+)
+  - name: Torrent9
+    version: 1
+    minVersion: '0.7.2'
+    website: https://torrent9.to
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: French
+        color: 32ade6
+      - name: Movies
+      - name: TV
+    htmlParser:
+      searchUrl: /search_torrent/{query}.html
+      rows: .table-responsive tbody tr
+      magnet:
+        externalLinkQuery: td:nth-child(1) a
+        query: .download-btn a
+        attribute: href
+      title:
+        query: td:nth-child(1) a
+      size:
+        query: td:nth-child(3)
+        regex: (\d+\.\d+)
+      sl:
+        seeders: td:nth-child(4) span
+        seederRegex: (\S+)
+        leechers: td:nth-child(5)
+        leecherRegex: (\S+)
+  - name: IlCorsaroNero
+    version: 1
+    minVersion: '0.7.2'
+    website: http://ilcorsaronero.link
+    tags:
+      - name: Italian
+        color: 32ade6
+      - name: Movies
+      - name: TV
+    htmlParser:
+      searchUrl: /argh.php?search={query}
+      rows: tr.odd, tr.odd2
+      magnet:
+        externalLinkQuery: td:nth-child(2) .tab
+        query: .magnet
+        attribute: href
+      title:
+        query: td:nth-child(2) .tab
+      size:
+        query: td:nth-child(3)
+      sl:
+        seeders: td:nth-child(6)
+        leechers: td:nth-child(7)
+  - name: OxTorrent
+    version: 1
+    minVersion: '0.7.2'
+    website: https://oxtorrent.gy
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: Movies
+      - name: TV
+    htmlParser:
+      searchUrl: /recherche/{query}
+      rows: tbody > tr
+      magnet:
+        externalLinkQuery: a:nth-child(2)
+        query: .btn-download a:nth-child(1)
+        attribute: href
+      title:
+        query: a:nth-child(2)
+      size:
+        query: td:nth-child(2)
+      sl:
+        seeders: td:nth-child(3)
+        seederRegex: (\S+)
+        leechers: td:nth-child(4)
+        leecherRegex: (\S+)
+  - name: TorLock
+    version: 1
+    minVersion: '0.7.2'
+    website: https://www.torlock.com
+    tags:
+      - name: Slow
+        color: ff9500
+      - name: Movies
+      - name: TV
+      - name: Anime
+    htmlParser:
+      searchUrl: /movie/torrents/{query}.html?
+      rows: .table-striped:nth-child(1) tbody tr
+      magnet:
+        externalLinkQuery: td:nth-child(1) a
+        query: .table-condensed thead tr th div:nth-child(2) h4 a
+        attribute: href
+      title:
+        query: td:nth-child(1) a
+      size:
+        query: .ts
+      sl:
+        seeders: .tul
+        leechers: .tdl
 actions:
   - name: Open in Outplayer
     version: 3
