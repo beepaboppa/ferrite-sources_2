@@ -93,6 +93,8 @@ sources:
   - name: Kickass
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      An ancient media provider. Very reliable to use.
     website: https://kick4ss.com
     tags:
       - name: Reliable
@@ -149,6 +151,38 @@ sources:
       sl:
         seeders: dd > span:nth-child(4)
         leechers: dd > span:nth-child(5)
+  - name: YTS
+    version: 3
+    minVersion: '0.6.4'
+    about: >-
+      Has pretty much every movie out there. Searching can be finnicky, so use the full term.
+    website: https://yts.mx
+    tags:
+      - name: Reliable
+        color: 34c759
+      - name: Movies
+    trackers:
+      - udp://tracker.opentrackr.org:1337/announce
+      - udp://tracker.leechers-paradise.org:6969/announce
+      - udp://9.rarbg.to:2710/announce
+      - udp://p4p.arenabg.ch:1337/announce
+      - udp://tracker.cyberia.is:6969/announce
+      - http://p4p.arenabg.com:1337/announce
+      - udp://tracker.internetwarriors.net:1337/announce
+    jsonParser:
+      searchUrl: /api/v2/list_movies.json?query_term={query}
+      results: data.movies
+      subResults: torrents
+      magnetHash:
+        query: hash
+      title:
+        query: title_long
+        discriminator: quality
+      size:
+        query: size
+      sl:
+        seeders: seeds
+        leechers: peers
   - name: 1337x
     version: 3
     about: >-
@@ -175,36 +209,6 @@ sources:
       sl:
         seeders: .seeds
         leechers: .leeches
-  - name: YTS
-    version: 3
-    minVersion: '0.6.4'
-    about: >-
-      Has pretty much every movie out there.
-    website: https://yts.mx
-    tags:
-      - name: Movies
-    trackers:
-      - udp://tracker.opentrackr.org:1337/announce
-      - udp://tracker.leechers-paradise.org:6969/announce
-      - udp://9.rarbg.to:2710/announce
-      - udp://p4p.arenabg.ch:1337/announce
-      - udp://tracker.cyberia.is:6969/announce
-      - http://p4p.arenabg.com:1337/announce
-      - udp://tracker.internetwarriors.net:1337/announce
-    jsonParser:
-      searchUrl: /api/v2/list_movies.json?query_term={query}
-      results: data.movies
-      subResults: torrents
-      magnetHash:
-        query: hash
-      title:
-        query: title_long
-        discriminator: quality
-      size:
-        query: size
-      sl:
-        seeders: seeds
-        leechers: peers
   - name: PirateBay
     version: 4
     minVersion: '0.6.4'
@@ -333,6 +337,7 @@ sources:
     minVersion: '0.7'
     about: >-
       Large library of media. Source is partly in Russian.
+      Labeled as not secure because who knows what Russian sites are doing.
     website: "http://rutor.info"
     tags:
       - name: Russian
@@ -469,6 +474,8 @@ sources:
   - name: TorrentDownload
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for media.
     website: https://www.torrentdownload.info
     tags:
       - name: Slow
@@ -494,6 +501,8 @@ sources:
   - name: AniRena
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Website tracking a wide variety of Japanese media.
     website: https://www.anirena.com
     tags:
       - name: Anime
@@ -513,6 +522,8 @@ sources:
   - name: TorrentDownloads
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for media. May be a sister site of TorrentDownload.
     website: https://www.torrentdownloads.pro
     tags:
       - name: Slow
@@ -537,6 +548,8 @@ sources:
   - name: LimeTorrents
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for media.
     website: https://www.limetorrents.lol
     tags:
       - name: Slow
@@ -567,6 +580,8 @@ sources:
   - name: Torrent9
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for primarily French media.
     website: https://torrent9.to
     tags:
       - name: Slow
@@ -595,6 +610,8 @@ sources:
   - name: IlCorsaroNero
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for primarily Italian media.
     website: http://ilcorsaronero.link
     tags:
       - name: Italian
@@ -618,10 +635,14 @@ sources:
   - name: OxTorrent
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for media. Website is in French.
     website: https://oxtorrent.gy
     tags:
       - name: Slow
         color: ff9500
+      - name: French
+        color: 32ade6
       - name: Movies
       - name: TV
     htmlParser:
@@ -643,6 +664,8 @@ sources:
   - name: TorLock
     version: 1
     minVersion: '0.7.2'
+    about: >-
+      Aggregate site for media.
     website: https://www.torlock.com
     tags:
       - name: Slow
