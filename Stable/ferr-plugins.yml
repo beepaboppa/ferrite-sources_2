@@ -19,7 +19,7 @@ sources:
       - https://extratorrent.st
       - https://extratorrent.one
       - https://extratorrent.cc
-    htmlParser:
+    htmlParser:  # <-- Fixed: lowercase 'p' to match official sources
       searchUrl: /search/?search={query}&srt=seeds&order=desc
       rows: tr.tlr
       magnet:
