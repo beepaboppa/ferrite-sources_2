@@ -5,7 +5,7 @@ sources:
     version: 1
     minVersion: '0.7.2'
     about: >-
-      A clone of the classic ExtraTorrent site. Reliable for movies, TV, music, and more.
+      A clone of the classic ExtraTorrent site. For movies, TV, music, anime, and more. (Note: Unstable clone in 2025 - often low or no search results; use at own risk)
     website: https://ext.to
     tags:
       - name: Reliable
@@ -13,13 +13,7 @@ sources:
       - name: Movies
       - name: TV
       - name: Anime
-    fallbackUrls:
-      - https://ext.to
-      - https://extratorrent.si
-      - https://extratorrent.st
-      - https://extratorrent.one
-      - https://extratorrent.cc
-    htmlParser:  # <-- Fixed: lowercase 'p' to match official sources
+    htmlParser:
       searchUrl: /search/?search={query}&srt=seeds&order=desc
       rows: tr.tlr
       magnet:
